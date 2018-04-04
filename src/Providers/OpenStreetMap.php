@@ -40,17 +40,19 @@ class OpenStreetMap extends Geocoder
 	protected function build(array $response)
 	{
 		$model			= new GeocoderModel();
-		return $model;
-		$model->street	= $response['features'][0]['properties']['name'];
-		$model->zip		= $response['features'][0]['properties']['postcode'];
-		$model->city	= $response['features'][0]['properties']['city'];
-		$model->country	= 'FR';
-		$model->type	= $response['features'][0]['properties']['type'];
-		$model->score	= $response['features'][0]['properties']['score'];
-		if( strtolower($response['features'][0]['geometry']['type']) === 'point' ){
-			$model->lng	= $response['features'][0]['geometry']['coordinates'][0];
-			$model->lat	= $response['features'][0]['geometry']['coordinates'][1];
+		if( !isset($response[0]) ){
+			return $model;
 		}
+		$street			= $response[0]['address']['road'] ?? null;
+		$street_number	= $response[0]['address']['house_number'] ?? null;
+		$model->street	= ($street_number ? $street_number.' ' : '') . $street;
+		$model->zip		= $response[0]['address']['postcode'] ?? null;
+		$model->city	= $response[0]['address']['city'] ?? null;
+		$model->country	= strtoupper($response[0]['address']['country_code']) ?? null;
+		$model->lat		= $response[0]['lat'] ?? null;
+		$model->lng		= $response[0]['lon'] ?? null;
+		$model->type	= $response[0]['type'] ?? null;
+		$model->score	= $response[0]['importance'] ?? null;
 
 		return $model;
 	}
