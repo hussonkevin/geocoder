@@ -1,0 +1,23 @@
+{
+    "name": "hussonkevin/geocoder",
+    "description": "PHP package for geocoding addresses",
+    "keywords": ["geocoding", "address", "coordinates"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HUSSON Kévin"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+		"guzzlehttp/guzzle": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HussonKevin\\Geocoder\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
