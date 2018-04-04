@@ -37,16 +37,37 @@ class Google extends Geocoder
 	protected function build(array $response)
 	{
 		$model			= new GeocoderModel();
-		return $model;
-		$model->street	= $response['features'][0]['properties']['name'];
-		$model->zip		= $response['features'][0]['properties']['postcode'];
-		$model->city	= $response['features'][0]['properties']['city'];
-		$model->country	= 'FR';
-		$model->type	= $response['features'][0]['properties']['type'];
-		$model->score	= $response['features'][0]['properties']['score'];
-		if( strtolower($response['features'][0]['geometry']['type']) === 'point' ){
-			$model->lng	= $response['features'][0]['geometry']['coordinates'][0];
-			$model->lat	= $response['features'][0]['geometry']['coordinates'][1];
+		if( !isset( $response['results'][0] )){
+			return $model;
+		}
+		if( isset( $response['results'][0]['address_components'] )){
+			$street			= null;
+			$street_number	= null;
+			foreach( $response['results'][0]['address_components'] as $component ){
+				foreach($component['types'] as $type){
+					switch( $type ){
+						case 'street_number':
+							$street_number	= $component['short_name'];
+							break;
+						case 'route':
+							$street			= $component['short_name'];
+							break;
+						case 'postal_code':
+							$model->zip		= $component['short_name'];
+							break;
+						case 'locality':
+							$model->city	= $component['short_name'];
+							break;
+						case 'country':
+							$model->country	= $component['short_name'];
+							break;
+					}
+				}
+			}
+			$model->street	= ($street_number ? $street_number.' ' : '') . $street;
+			$model->type	= $response['results'][0]['types'][0] ?? null;
+			$model->lng		= $response['results'][0]['geometry']['location']['lng'] ?? null;
+			$model->lat		= $response['results'][0]['geometry']['location']['lat'] ?? null;
 		}
 
 		return $model;
