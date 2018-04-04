@@ -37,16 +37,14 @@ class DataGouvFR extends Geocoder
 	protected function build(array $response)
 	{
 		$model			= new GeocoderModel();
-		$model->street	= $response['features'][0]['properties']['name'];
-		$model->zip		= $response['features'][0]['properties']['postcode'];
-		$model->city	= $response['features'][0]['properties']['city'];
+		$model->street	= $response['features'][0]['properties']['name'] ?? null;
+		$model->zip		= $response['features'][0]['properties']['postcode'] ?? null;
+		$model->city	= $response['features'][0]['properties']['city'] ?? null;
 		$model->country	= 'FR';
-		$model->type	= $response['features'][0]['properties']['type'];
-		$model->score	= $response['features'][0]['properties']['score'];
-		if( strtolower($response['features'][0]['geometry']['type']) === 'point' ){
-			$model->lng	= $response['features'][0]['geometry']['coordinates'][0];
-			$model->lat	= $response['features'][0]['geometry']['coordinates'][1];
-		}
+		$model->type	= $response['features'][0]['properties']['type'] ?? null;
+		$model->score	= $response['features'][0]['properties']['score'] ?? null;
+		$model->lng		= $response['features'][0]['geometry']['coordinates'][0] ?? null;
+		$model->lat		= $response['features'][0]['geometry']['coordinates'][1] ?? null;
 
 		return $model;
 	}
