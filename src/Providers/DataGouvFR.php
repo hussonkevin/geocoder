@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries\Geocoder\Providers;
+namespace HussonKevin\Geocoder\Providers;
 
-use App\Libraries\Geocoder\Geocoder;
-use App\Libraries\Geocoder\GeocoderModel;
+use HussonKevin\Geocoder\Geocoder;
+use HussonKevin\Geocoder\GeocoderModel;
 use GuzzleHttp\Client;
 
 /**

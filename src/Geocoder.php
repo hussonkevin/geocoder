@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Geocoder;
+namespace HussonKevin\Geocoder;
 
 abstract class Geocoder
 {
@@ -55,7 +55,7 @@ abstract class Geocoder
 	 * Build common response
 	 * 
 	 * @param array $response The json decode result
-	 * @return \App\Libraries\Geocoder\GeocoderModel
+	 * @return \HussonKevin\Geocoder\GeocoderModel
 	 */
 	abstract protected function build(array $response);
 }
