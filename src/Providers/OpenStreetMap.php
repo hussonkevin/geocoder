@@ -47,7 +47,7 @@ class OpenStreetMap extends Geocoder
 		$street_number	= $response[0]['address']['house_number'] ?? null;
 		$model->street	= ($street_number ? $street_number.' ' : '') . $street;
 		$model->zip		= $response[0]['address']['postcode'] ?? null;
-		$model->city	= $response[0]['address']['city'] ?? null;
+		$model->city	= $response[0]['address']['city'] ?? $response[0]['address']['town'] ?? null;
 		$model->country	= strtoupper($response[0]['address']['country_code']) ?? null;
 		$model->lat		= $response[0]['lat'] ?? null;
 		$model->lng		= $response[0]['lon'] ?? null;
